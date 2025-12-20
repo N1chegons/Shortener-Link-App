@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>ShortLink | Сокращатель ссылок</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            color: #764ba2;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .server-info {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .server-info i {
+            font-size: 1.5rem;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            color: #555;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 15px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-box.show {
+            display: block;
+        }
+
+        .result-content {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
+            font-size: 0.95rem;
+            border: 2px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .url-display {
+            margin: 10px 0;
+            padding: 12px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .copy-btn:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+        }
+
+        .open-btn {
+            background: #28a745;
+            color: white;
+        }
+
+        .open-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin: 15px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-link"></i>
+            </div>
+            <h1>ShortLink Pro</h1>
+            <div class="subtitle">Сокращайте ссылки в один клик</div>
+        </div>
+
+        <div class="server-info">
+            <i class="fas fa-server"></i>
+            <div>
+                <strong>Сервер работает</strong><br>
+                Порт 8264 • Все пути с префиксом /shortener
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="longUrl">
+                <i class="fas fa-globe"></i> Введите длинный URL
+            </label>
+            <input type="text" id="longUrl"
+                   placeholder="https://example.com/очень-длинный-путь-на-сайте"
+                   value="https://youtube.com">
+        </div>
+
+        <button class="btn" onclick="createShort()">
+            <i class="fas fa-magic"></i> Создать короткую ссылку
+        </button>
+
+        <div id="result" class="result-box">
+            <h3 style="margin-bottom: 15px;">
+                <i class="fas fa-check-circle"></i> Короткая ссылка создана!
+            </h3>
+
+            <div class="url-display">
+                <strong style="color: #764ba2;">Короткий код:</strong><br>
+                <span id="shortCode" style="font-size: 1.2rem; font-weight: bold;"></span>
+            </div>
+
+            <div class="url-display">
+                <strong style="color: #764ba2;">Полная ссылка:</strong><br>
+                <span id="fullUrl"></span>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn copy-btn" onclick="copyFullUrl()">
+                    <i class="far fa-copy"></i> Копировать ссылку
+                </button>
+                <a id="openLink" target="_blank" style="text-decoration: none;">
+                    <button class="action-btn open-btn">
+                        <i class="fas fa-external-link-alt"></i> Перейти по ссылке
+                    </button>
+                </a>
+            </div>
+
+            <div class="stats">
+                <span><i class="far fa-clock"></i> Создано: только что</span>
+                <span><i class="fas fa-bolt"></i> Готово к использованию</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #666; font-size: 0.9rem;">
+            <p><i class="far fa-copyright"></i> 2024 ShortLink Pro • FastAPI</p>
+            <p>Создавайте и делитесь короткими ссылками мгновенно</p>
+        </div>
+    </div>
+
+    <script>
+        const BASE = 'http://localhost:8264';
+
+        // Основная функция
+        async function createShort() {
+            const url = document.getElementById('longUrl').value.trim();
+            const resultBox = document.getElementById('result');
+
+            if (!url) {
+                alert('⚠️ Введите URL для сокращения');
+                return;
+            }
+
+            try {
+                // Показываем загрузку
+                resultBox.classList.add('show');
+                document.getElementById('shortCode').textContent = '⌛ Создаём...';
+                document.getElementById('fullUrl').textContent = 'Ожидайте...';
+
+                // Отправляем запрос
+                const response = await fetch(BASE + '/shortener/get_short_url', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ long_url: url })
+                });
+
+                const text = await response.text();
+
+                if (response.ok) {
+                    const data = JSON.parse(text);
+                    const shortCode = data['New short url'];
+                    const fullUrl = `${BASE}/shortener/${shortCode}`;
+
+                    // Обновляем результат
+                    document.getElementById('shortCode').textContent = shortCode;
+                    document.getElementById('fullUrl').textContent = fullUrl;
+                    document.getElementById('openLink').href = fullUrl;
+
+                    // Добавляем анимацию
+                    resultBox.style.animation = 'none';
+                    setTimeout(() => {
+                        resultBox.style.animation = 'fadeIn 0.5s ease';
+                    }, 10);
+
+                } else {
+                    throw new Error(`Ошибка сервера: ${text}`);
+                }
+
+            } catch(error) {
+                // Показываем ошибку
+                document.getElementById('shortCode').textContent = '❌ Ошибка';
+                document.getElementById('fullUrl').textContent = error.message;
+                resultBox.style.background = 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)';
+            }
+        }
+
+        // Копирование ссылки
+        function copyFullUrl() {
+            const fullUrl = document.getElementById('fullUrl').textContent;
+
+            navigator.clipboard.writeText(fullUrl)
+                .then(() => {
+                    // Временное сообщение
+                    const btn = document.querySelector('.copy-btn');
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+                    btn.style.background = '#28a745';
+
+                    setTimeout(() => {
+                        btn.innerHTML = original;
+                        btn.style.background = '';
+                    }, 2000);
+                })
+                .catch(err => {
+                    alert('❌ Не удалось скопировать: ' + err);
+                });
+        }
+
+        // Автозапуск при Enter
+        document.getElementById('longUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') createShort();
+        });
+
+        // Автофокус при загрузке
+        window.onload = function() {
+            document.getElementById('longUrl').focus();
+            console.log('✅ ShortLink готов к работе!');
+            console.log('🔗 API:', BASE);
+        };
+    </script>
+</body>
+</html>
