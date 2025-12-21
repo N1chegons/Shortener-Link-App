@@ -11,8 +11,7 @@ from src.auth.models import User
 from src.auth.schemas import UserRead, UserCreate
 
 router = APIRouter(
-    prefix="/user",
-    tags=["User"],
+    tags=["Auth"],
 )
 
 # conf fastapi_users

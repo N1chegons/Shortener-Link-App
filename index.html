@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>ShortLink | Сокращатель ссылок</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShortLink Pro | Сокращение ссылок</title>
     <style>
         * {
             margin: 0;
@@ -11,18 +12,17 @@
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: white;
             border-radius: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             width: 100%;
@@ -32,60 +32,67 @@
         }
 
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         .logo {
             color: #764ba2;
-            font-size: 2.8rem;
+            font-size: 3rem;
             margin-bottom: 10px;
-            display: inline-block;
         }
 
         h1 {
             color: #333;
             font-size: 2rem;
             margin-bottom: 10px;
-            font-weight: 700;
         }
 
-        .subtitle {
-            color: #666;
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            background: none;
+            border: none;
             font-size: 1rem;
-            margin-bottom: 30px;
-            opacity: 0.8;
-        }
-
-        .server-info {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 30px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            gap: 8px;
         }
 
-        .server-info i {
-            font-size: 1.5rem;
+        .tab-btn.active {
+            background: #764ba2;
+            color: white;
         }
 
-        .input-group {
-            margin-bottom: 25px;
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
         }
 
         label {
@@ -93,43 +100,37 @@
             color: #555;
             margin-bottom: 8px;
             font-weight: 500;
-            font-size: 0.95rem;
         }
 
         input {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px 18px;
             border: 2px solid #e0e0e0;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-            color: #333;
+            transition: border-color 0.3s;
         }
 
         input:focus {
             outline: none;
             border-color: #764ba2;
-            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
         }
 
         .btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 16px 32px;
-            border-radius: 12px;
+            padding: 14px 28px;
+            border-radius: 10px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            width: 100%;
-            letter-spacing: 0.5px;
-            margin-bottom: 20px;
         }
 
         .btn:hover {
@@ -137,63 +138,63 @@
             box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
         }
 
-        .result-box {
-            margin-top: 25px;
-            padding: 25px;
-            border-radius: 15px;
-            display: none;
-            animation: fadeIn 0.5s ease;
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        .btn-secondary {
+            background: #6c757d;
+            margin-top: 10px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: #d4edda;
             color: #155724;
-            border-left: 5px solid #28a745;
+            border: 1px solid #c3e6cb;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
         }
 
-        .result-box.show {
-            display: block;
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .result-box {
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            background: #e7f3ff;
         }
 
         .result-content {
             padding: 15px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            margin: 15px 0;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-            font-size: 0.95rem;
-            border: 2px solid rgba(40, 167, 69, 0.3);
-        }
-
-        .url-display {
-            margin: 10px 0;
-            padding: 12px;
             background: white;
             border-radius: 8px;
-            border-left: 4px solid #764ba2;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            margin: 10px 0;
+            font-family: 'Courier New', monospace;
+            word-break: break-all;
         }
 
         .action-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 8px 16px;
+            border-radius: 6px;
             border: none;
-            font-weight: 600;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: all 0.3s ease;
+            gap: 5px;
+            margin-right: 10px;
+            margin-top: 10px;
         }
 
         .copy-btn {
@@ -201,40 +202,9 @@
             color: white;
         }
 
-        .copy-btn:hover {
-            background: #545b62;
-            transform: translateY(-2px);
-        }
-
         .open-btn {
             background: #28a745;
             color: white;
-        }
-
-        .open-btn:hover {
-            background: #218838;
-            transform: translateY(-2px);
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(0,0,0,0.1);
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 25px;
-                margin: 15px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -246,157 +216,280 @@
                 <i class="fas fa-link"></i>
             </div>
             <h1>ShortLink Pro</h1>
-            <div class="subtitle">Сокращайте ссылки в один клик</div>
+            <p>Сокращайте ссылки быстро и удобно</p>
         </div>
 
-        <div class="server-info">
-            <i class="fas fa-server"></i>
-            <div>
-                <strong>Сервер работает</strong><br>
-                Порт 8264 • Все пути с префиксом /shortener
-            </div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('auth')" id="authTabBtn">
+                <i class="fas fa-sign-in-alt"></i> Вход
+            </button>
+            <button class="tab-btn" onclick="showTab('create')" id="createTabBtn">
+                <i class="fas fa-plus"></i> Создать
+            </button>
         </div>
 
-        <div class="input-group">
-            <label for="longUrl">
-                <i class="fas fa-globe"></i> Введите длинный URL
-            </label>
-            <input type="text" id="longUrl"
-                   placeholder="https://example.com/очень-длинный-путь-на-сайте"
-                   value="https://youtube.com">
+        <!-- ВКЛАДКА ВХОДА -->
+        <div id="authTab" class="tab-content active">
+            <div id="authAlert"></div>
+
+            <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="authEmail" placeholder="test@example.com" value="test@example.com">
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-lock"></i> Пароль</label>
+                <input type="password" id="authPassword" placeholder="password" value="password">
+            </div>
+
+            <button class="btn" onclick="login()" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i> Войти
+            </button>
+
+            <button class="btn btn-secondary" onclick="register()">
+                <i class="fas fa-user-plus"></i> Зарегистрироваться
+            </button>
         </div>
 
-        <button class="btn" onclick="createShort()">
-            <i class="fas fa-magic"></i> Создать короткую ссылку
-        </button>
+        <!-- ВКЛАДКА СОЗДАНИЯ ССЫЛКИ -->
+        <div id="createTab" class="tab-content">
+            <div id="createAlert"></div>
 
-        <div id="result" class="result-box">
-            <h3 style="margin-bottom: 15px;">
-                <i class="fas fa-check-circle"></i> Короткая ссылка создана!
-            </h3>
-
-            <div class="url-display">
-                <strong style="color: #764ba2;">Короткий код:</strong><br>
-                <span id="shortCode" style="font-size: 1.2rem; font-weight: bold;"></span>
+            <div class="form-group">
+                <label><i class="fas fa-globe"></i> Длинный URL</label>
+                <input type="text" id="longUrl" placeholder="https://example.com/очень-длинный-путь" value="https://youtube.com">
             </div>
 
-            <div class="url-display">
-                <strong style="color: #764ba2;">Полная ссылка:</strong><br>
-                <span id="fullUrl"></span>
-            </div>
+            <button class="btn" onclick="createShort()" id="createBtn">
+                <i class="fas fa-magic"></i> Создать короткую ссылку
+            </button>
 
-            <div class="action-buttons">
-                <button class="action-btn copy-btn" onclick="copyFullUrl()">
-                    <i class="far fa-copy"></i> Копировать ссылку
-                </button>
-                <a id="openLink" target="_blank" style="text-decoration: none;">
-                    <button class="action-btn open-btn">
-                        <i class="fas fa-external-link-alt"></i> Перейти по ссылке
-                    </button>
-                </a>
-            </div>
-
-            <div class="stats">
-                <span><i class="far fa-clock"></i> Создано: только что</span>
-                <span><i class="fas fa-bolt"></i> Готово к использованию</span>
-            </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 30px; color: #666; font-size: 0.9rem;">
-            <p><i class="far fa-copyright"></i> 2024 ShortLink Pro • FastAPI</p>
-            <p>Создавайте и делитесь короткими ссылками мгновенно</p>
+            <div id="createResult"></div>
         </div>
     </div>
 
     <script>
-        const BASE = 'http://localhost:8264';
+        const BASE = 'http://localhost:9878';
 
-        // Основная функция
-        async function createShort() {
-            const url = document.getElementById('longUrl').value.trim();
-            const resultBox = document.getElementById('result');
+        // Инициализация
+        window.onload = function() {
+            console.log('ShortLink Pro загружен');
+            showTab('auth'); // Всегда начинаем со входа
+        };
 
-            if (!url) {
-                alert('⚠️ Введите URL для сокращения');
+        // Показ вкладок
+        function showTab(tabName) {
+            // Скрываем все
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+
+            // Показываем нужную
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            document.getElementById(tabName + 'TabBtn').classList.add('active');
+
+            // Очищаем сообщения при переключении
+            clearAlerts();
+        }
+
+        // Очистка сообщений
+        function clearAlerts() {
+            document.getElementById('authAlert').innerHTML = '';
+            document.getElementById('createAlert').innerHTML = '';
+            document.getElementById('createResult').innerHTML = '';
+        }
+
+        // Показать сообщение
+        function showAlert(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    ${message}
+                </div>
+            `;
+        }
+
+        // Регистрация
+        async function register() {
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+
+            if (!email || !password) {
+                showAlert('authAlert', 'Заполните email и пароль', 'error');
                 return;
             }
 
             try {
-                // Показываем загрузку
-                resultBox.classList.add('show');
-                document.getElementById('shortCode').textContent = '⌛ Создаём...';
-                document.getElementById('fullUrl').textContent = 'Ожидайте...';
+                showAlert('authAlert', '<i class="fas fa-spinner fa-spin"></i> Регистрируем...', 'info');
 
-                // Отправляем запрос
-                const response = await fetch(BASE + '/shortener/get_short_url', {
+                const response = await fetch(BASE + '/auth/register', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ long_url: url })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
                 });
 
-                const text = await response.text();
-
                 if (response.ok) {
-                    const data = JSON.parse(text);
-                    const shortCode = data['New short url'];
-                    const fullUrl = `${BASE}/shortener/${shortCode}`;
-
-                    // Обновляем результат
-                    document.getElementById('shortCode').textContent = shortCode;
-                    document.getElementById('fullUrl').textContent = fullUrl;
-                    document.getElementById('openLink').href = fullUrl;
-
-                    // Добавляем анимацию
-                    resultBox.style.animation = 'none';
-                    setTimeout(() => {
-                        resultBox.style.animation = 'fadeIn 0.5s ease';
-                    }, 10);
-
+                    showAlert('authAlert', '✅ Регистрация успешна! Теперь войдите', 'success');
                 } else {
-                    throw new Error(`Ошибка сервера: ${text}`);
+                    const data = await response.json();
+                    showAlert('authAlert', `❌ Ошибка: ${data.detail || 'Неизвестная ошибка'}`, 'error');
                 }
-
-            } catch(error) {
-                // Показываем ошибку
-                document.getElementById('shortCode').textContent = '❌ Ошибка';
-                document.getElementById('fullUrl').textContent = error.message;
-                resultBox.style.background = 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)';
+            } catch (error) {
+                showAlert('authAlert', `❌ Ошибка сети: ${error.message}`, 'error');
             }
         }
 
-        // Копирование ссылки
-        function copyFullUrl() {
-            const fullUrl = document.getElementById('fullUrl').textContent;
+        // Вход - ГЛАВНАЯ ФУНКЦИЯ
+        async function login() {
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
 
-            navigator.clipboard.writeText(fullUrl)
-                .then(() => {
-                    // Временное сообщение
-                    const btn = document.querySelector('.copy-btn');
-                    const original = btn.innerHTML;
-                    btn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
-                    btn.style.background = '#28a745';
+            if (!email || !password) {
+                showAlert('authAlert', 'Заполните email и пароль', 'error');
+                return;
+            }
 
+            // Показываем загрузку
+            const loginBtn = document.getElementById('loginBtn');
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Вход...';
+            loginBtn.disabled = true;
+
+            try {
+                // Формируем данные для входа
+                const formData = new URLSearchParams();
+                formData.append('username', email);
+                formData.append('password', password);
+
+                // Отправляем запрос на вход
+                const response = await fetch(BASE + '/auth/jwt/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    credentials: 'include',
+                    body: formData.toString()
+                });
+
+                console.log('Статус входа:', response.status);
+
+                if (response.status === 204 || response.ok) {
+                    // ВСЁ ЗАЕБИСЬ! Перекидываем на создание ссылок
+                    showAlert('authAlert', '✅ Вход успешен! Переходим к созданию ссылок...', 'success');
+
+                    // Через секунду переключаемся на вкладку создания
                     setTimeout(() => {
-                        btn.innerHTML = original;
-                        btn.style.background = '';
-                    }, 2000);
+                        showTab('create');
+                        showAlert('createAlert', '✅ Вы успешно вошли в систему! Теперь можете создавать короткие ссылки.', 'success');
+                    }, 1000);
+
+                } else {
+                    // ЧТО-ТО НЕ ТАК - показываем ошибку
+                    const text = await response.text();
+                    showAlert('authAlert', `❌ Ошибка входа: ${response.status} - ${text}`, 'error');
+                }
+            } catch (error) {
+                showAlert('authAlert', `❌ Ошибка сети: ${error.message}`, 'error');
+            } finally {
+                // Восстанавливаем кнопку
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }
+        }
+
+        // Создание короткой ссылки
+        async function createShort() {
+            const url = document.getElementById('longUrl').value.trim();
+
+            if (!url) {
+                showAlert('createAlert', 'Введите URL для сокращения', 'error');
+                return;
+            }
+
+            // Проверяем формат URL
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                showAlert('createAlert', 'URL должен начинаться с http:// или https://', 'error');
+                return;
+            }
+
+            // Показываем загрузку
+            const createBtn = document.getElementById('createBtn');
+            const originalText = createBtn.innerHTML;
+            createBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Создаем...';
+            createBtn.disabled = true;
+
+            try {
+                showAlert('createAlert', '<i class="fas fa-spinner fa-spin"></i> Создаем короткую ссылку...', 'info');
+
+                const response = await fetch(BASE + '/shortener/get_short_url', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ long_url: url })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // ВСЁ ЗАЕБИСЬ! Показываем результат
+                    const shortCode = data['New short url'] || data.short_url || data.code;
+                    const fullUrl = `${BASE}/shortener/${shortCode}`;
+
+                    const resultHTML = `
+                        <div class="result-box">
+                            <h4><i class="fas fa-check-circle"></i> Ссылка создана!</h4>
+                            <div class="result-content">
+                                <strong>Короткий код:</strong> ${shortCode}<br>
+                                <strong>Полная ссылка:</strong> ${fullUrl}
+                            </div>
+                            <button class="action-btn copy-btn" onclick="copyText('${fullUrl}')">
+                                <i class="far fa-copy"></i> Копировать ссылку
+                            </button>
+                            <a href="${fullUrl}" target="_blank" style="text-decoration: none;">
+                                <button class="action-btn open-btn">
+                                    <i class="fas fa-external-link-alt"></i> Перейти
+                                </button>
+                            </a>
+                        </div>
+                    `;
+
+                    document.getElementById('createResult').innerHTML = resultHTML;
+                    showAlert('createAlert', '✅ Ссылка успешно создана!', 'success');
+
+                } else {
+                    // ЧТО-ТО НЕ ТАК
+                    showAlert('createAlert', `❌ Ошибка: ${data.detail || JSON.stringify(data)}`, 'error');
+                }
+            } catch (error) {
+                showAlert('createAlert', `❌ Ошибка сети: ${error.message}`, 'error');
+            } finally {
+                // Восстанавливаем кнопку
+                createBtn.innerHTML = originalText;
+                createBtn.disabled = false;
+            }
+        }
+
+        // Копирование текста
+        function copyText(text) {
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    showAlert('createAlert', '✅ Ссылка скопирована в буфер!', 'success');
                 })
-                .catch(err => {
-                    alert('❌ Не удалось скопировать: ' + err);
+                .catch(() => {
+                    showAlert('createAlert', '❌ Не удалось скопировать', 'error');
                 });
         }
 
-        // Автозапуск при Enter
-        document.getElementById('longUrl').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') createShort();
+        // Обработка Enter
+        document.getElementById('authEmail').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') login();
         });
 
-        // Автофокус при загрузке
-        window.onload = function() {
-            document.getElementById('longUrl').focus();
-            console.log('✅ ShortLink готов к работе!');
-            console.log('🔗 API:', BASE);
-        };
+        document.getElementById('authPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') login();
+        });
+
+        document.getElementById('longUrl').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') createShort();
+        });
     </script>
 </body>
 </html>

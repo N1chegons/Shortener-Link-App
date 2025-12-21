@@ -14,8 +14,7 @@ class Settings(BaseSettings):
     MANAGER_PASS: str
     RESEND_API_KEY: str
 
-    # REDIS_URL: str
-    # URL_HASH_SALT: str
+    REDIS_URL: str
 
     @property
     def DB_URL(self):
