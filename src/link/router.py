@@ -7,10 +7,8 @@ from starlette.responses import RedirectResponse
 
 from src.link.exceptions import SlugAlreadyExistsError, NoLongUrlFoundError
 from src.link.repository import get_original_url_by_short_url
-from src.link.service import generate_short_url
-from fastapi_cache.decorator import cache
 
-
+from src.link.utilits import generate_short_url
 
 router = APIRouter(
     prefix="/shortener",

@@ -1,6 +1,6 @@
 from typing import List
 
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, delete
 from sqlalchemy.orm import joinedload
 from starlette import status
 from starlette.exceptions import HTTPException
@@ -54,4 +54,26 @@ class UserRepository:
                 await session.commit()
                 return {"message": "Ссылка добавлена в избранное."}
             except Exception:
+                raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Что-то пошло не так.")
+
+
+    @classmethod
+    async def delete_my_favlink(cls, short_url: str, user_id: int):
+        async with async_session() as session:
+            link = await _get_fav_link(user_id, short_url)
+            query = delete(FavoriteLink).filter_by(short_url=short_url, user_id=user_id)
+            if not link:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND,
+                    detail="Ссылка не существует либо не находится у вас в избранном."
+                )
+
+            await session.execute(query)
+            try:
+                await session.commit()
+                return {
+                    "status": status.HTTP_200_OK,
+                    "message": f"Ссылка {short_url} удалена из избранного.",
+                }
+            except:
                 raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Что-то пошло не так.")

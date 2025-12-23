@@ -1,25 +1,9 @@
-from contextlib import asynccontextmanager
-from typing import AsyncIterator
-
-from redis import asyncio as aioredis
-
 from fastapi import FastAPI
-from fastapi_cache import FastAPICache
-from fastapi_cache.backends.redis import RedisBackend
 from starlette.middleware.cors import CORSMiddleware
-
-from src.config import settings
-
-@asynccontextmanager
-async def lifespan(_: FastAPI) -> AsyncIterator[None]:
-    redis = aioredis.from_url(settings.REDIS_URL)
-    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
-    yield
 
 app = FastAPI(
     title="Link Shortener",
-    summary="In this project, you can shorten links using this API.",
-    lifespan=lifespan
+    summary="In this project, you can shorten links using this API."
 )
 
 app.add_middleware(

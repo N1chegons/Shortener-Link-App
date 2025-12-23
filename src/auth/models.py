@@ -15,10 +15,10 @@ class User(SQLAlchemyBaseUserTable[int], Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     email: Mapped[EmailStr]
     hashed_password: Mapped[str]
-    registered_at: Mapped[datetime.datetime] = mapped_column(
-        server_default=text(
-            "TIMEZONE('utc', now())")
-    )
+    # registered_at: Mapped[datetime.datetime] = mapped_column(
+    #     server_default=text(
+    #         "TIMEZONE('utc', now())")
+    # )
     is_active: Mapped[bool] = mapped_column(default=True, nullable=False)
     is_superuser: Mapped[bool] = mapped_column(default=False, nullable=False)
     is_verified: Mapped[bool] = mapped_column(default=True, nullable=False)

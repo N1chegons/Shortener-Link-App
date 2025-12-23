@@ -14,10 +14,10 @@ class Link(Base):
 
     fav_by = relationship("FavoriteLink", back_populates="link")
 
-    created_at: Mapped[datetime.datetime] = mapped_column(
-        server_default=text(
-            "TIMEZONE('utc', now())")
-    )
+    # created_at: Mapped[datetime.datetime] = mapped_column(
+    #     server_default=text(
+    #         "TIMEZONE('utc', now())")
+    # )
 
 
 class FavoriteLink(Base):
