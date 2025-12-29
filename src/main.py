@@ -1,5 +1,11 @@
+
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+
+from src.logger import setup_logging, get_logger
+
+setup_logging()
+logger = get_logger(__name__)
 
 app = FastAPI(
     title="Link Shortener",
@@ -16,6 +22,7 @@ app.add_middleware(
 
 @app.get("/")
 async def get_home_page():
+    logger.info("Test endpoint is work.")
     return {
         "status": 200,
         "message": "Hello"

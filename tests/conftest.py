@@ -36,7 +36,7 @@ async def test_engine():
 
     await engine.dispose()
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 async def db_session(test_engine):
     async_session = async_sessionmaker(
         test_engine,
@@ -50,7 +50,7 @@ async def db_session(test_engine):
         # После теста откатываем изменения
         await session.rollback()
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 async def client(db_session: AsyncSession):
     async def override_get_async_session():
         yield db_session

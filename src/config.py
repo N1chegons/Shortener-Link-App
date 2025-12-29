@@ -18,6 +18,7 @@ class Settings(BaseSettings):
 
     TEST_DATABASE_URL: str
 
+
     @property
     def DB_URL(self):
         return f"postgresql+asyncpg://{self.DB_USER}:{self.DB_PASS}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"

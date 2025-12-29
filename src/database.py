@@ -14,9 +14,11 @@ class Base(DeclarativeBase):
 DB_URL = settings.DB_URL
 async_engine = create_async_engine(url= DB_URL)
 async_session = async_sessionmaker(async_engine)
+
 async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
     async with async_session() as session:
         yield session
+
 async def get_user_db(session: AsyncSession = Depends(get_async_session)):
     yield SQLAlchemyUserDatabase(session, user_model.User)
 

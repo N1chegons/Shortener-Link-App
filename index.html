@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShortLink Pro | Сокращение ссылок</title>
+    <title>ShortLink Pro</title>
     <style>
         * {
             margin: 0;
@@ -12,78 +12,175 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: #f0f0f0;
             min-height: 100vh;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ЛЕВАЯ ПАНЕЛЬ - ПРОФИЛЬ */
+        .sidebar {
+            background: rgba(20, 20, 20, 0.95);
+            border-right: 1px solid #333;
+            padding: 40px 30px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
         }
 
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 600px;
-            padding: 40px;
-            animation: slideUp 0.5s ease;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .header {
+        .profile-section {
             text-align: center;
-            margin-bottom: 30px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid #333;
+            margin-bottom: 40px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #8a2be2 0%, #4169e1 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: 700;
+            color: white;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 45px rgba(138, 43, 226, 0.6);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .profile-email {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .user-id {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 13px;
+            font-family: 'SF Mono', monospace;
+        }
+
+        /* ПРАВАЯ ЧАСТЬ - КОНТЕНТ */
+        .main-content {
+            padding: 40px;
+            overflow-y: auto;
+            background: rgba(15, 15, 15, 0.95);
+        }
+
+        /* ЗАГОЛОВОК */
+        .header {
+            margin-bottom: 50px;
+            text-align: center;
         }
 
         .logo {
-            color: #764ba2;
-            font-size: 3rem;
-            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
         }
 
-        h1 {
-            color: #333;
-            font-size: 2rem;
-            margin-bottom: 10px;
+        .logo-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8a2be2 0%, #4169e1 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.4);
         }
 
+        .logo-text h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, #a0a0ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+            text-align: left;
+        }
+
+        .subtitle {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        /* КОНТЕНТНЫЙ КОНТЕЙНЕР */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ТАБЫ */
         .tabs {
             display: flex;
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 5px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+            backdrop-filter: blur(10px);
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px;
-            background: none;
+            padding: 20px 15px;
+            background: transparent;
             border: none;
-            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
             font-weight: 600;
-            color: #666;
             cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.3s;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            min-width: 120px;
-            margin: 2px;
+            gap: 15px;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .tab-btn.active {
-            background: #764ba2;
-            color: white;
+            background: rgba(138, 43, 226, 0.2);
+            color: #8a2be2;
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.3);
         }
 
         .tab-btn:disabled {
@@ -91,458 +188,896 @@
             cursor: not-allowed;
         }
 
+        /* СКРЫТАЯ ВКЛАДКА */
+        .tab-btn.hidden {
+            display: none;
+        }
+
+        /* КОНТЕНТ ТАБОВ */
         .tab-content {
             display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .tab-content.active {
             display: block;
         }
 
+        /* КАРТОЧКИ */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(138, 43, 226, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-header i {
+            font-size: 28px;
+            color: #8a2be2;
+        }
+
+        .card-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* ФОРМЫ */
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
 
         label {
             display: block;
-            color: #555;
-            margin-bottom: 8px;
-            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         input {
             width: 100%;
-            padding: 14px 18px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
+            padding: 22px 25px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: 'SF Mono', monospace;
         }
 
         input:focus {
             outline: none;
-            border-color: #764ba2;
+            border-color: #8a2be2;
+            box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.2);
+            background: rgba(255, 255, 255, 0.08);
         }
 
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* КНОПКИ */
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            padding: 22px 40px;
+            background: linear-gradient(135deg, #8a2be2 0%, #4169e1 100%);
             border: none;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 18px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 15px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 15px 35px rgba(138, 43, 255, 0.4);
+            width: 100%;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(118, 75, 162, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 45px rgba(138, 43, 255, 0.6);
         }
 
-        .btn-secondary {
-            background: #6c757d;
-        }
-
-        .btn-success {
-            background: #28a745;
-        }
-
-        .btn-danger {
-            background: #dc3545;
+        .btn:active {
+            transform: translateY(-1px);
         }
 
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
-            box-shadow: none !important;
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.4) !important;
         }
 
-        .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            text-align: center;
-            font-weight: 500;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
 
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
         }
 
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        /* ГРИД ДЛЯ КНОПОК */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 40px;
         }
 
-        .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
+        /* QR ИНПУТ С КНОПКОЙ */
+        .input-with-btn {
+            display: grid;
+            grid-template-columns: 1fr 120px;
+            gap: 15px;
+            align-items: center;
         }
 
-        .result-box {
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            background: #e7f3ff;
-        }
-
-        .result-content {
-            padding: 15px;
-            background: white;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-        }
-
-        .action-btn {
-            padding: 8px 16px;
-            border-radius: 6px;
+        .qr-btn-inline {
+            height: 70px;
+            background: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
             border: none;
+            border-radius: 18px;
+            color: white;
+            font-size: 24px;
             cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            margin-right: 10px;
-            margin-top: 10px;
-            transition: all 0.3s;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-        }
-
-        .copy-btn {
-            background: #6c757d;
-            color: white;
-        }
-
-        .open-btn {
-            background: #28a745;
-            color: white;
-        }
-
-        .fav-btn {
-            background: #ffc107;
-            color: #212529;
-        }
-
-        .remove-btn {
-            background: #dc3545;
-            color: white;
-        }
-
-        .links-list {
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 20px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 15px;
-        }
-
-        .link-item {
-            padding: 12px;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .link-item:last-child {
-            border-bottom: none;
-        }
-
-        .link-code {
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            color: #764ba2;
-            font-size: 1.1rem;
-        }
-
-        .link-url {
-            color: #666;
-            font-size: 0.9rem;
-            word-break: break-all;
-            margin-top: 5px;
-        }
-
-        .link-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .user-panel {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .user-panel.show {
-            display: flex;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            background: #764ba2;
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(23, 162, 184, 0.4);
+        }
+
+        .qr-btn-inline:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(23, 162, 184, 0.6);
+        }
+
+        /* РЕЗУЛЬТАТ */
+        .result-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 25px;
+            padding: 40px;
+            margin-top: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+
+        .result-line {
+            display: flex;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-line:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .result-label {
+            min-width: 200px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .result-value {
+            flex: 1;
+            color: #fff;
+            font-family: 'SF Mono', monospace;
+            word-break: break-all;
+        }
+
+        .result-code {
+            color: #8a2be2;
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 3px;
+        }
+
+        .result-url {
+            color: #4169e1;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .result-url:hover {
+            text-decoration: underline;
+        }
+
+        /* КНОПКИ ДЕЙСТВИЙ */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .action-btn {
+            padding: 18px 30px;
+            border: none;
+            border-radius: 15px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn {
+            background: rgba(108, 117, 125, 0.8);
+            color: #fff;
+        }
+
+        .open-btn {
+            background: rgba(40, 167, 69, 0.8);
+            color: #fff;
+        }
+
+        .fav-btn {
+            background: rgba(255, 193, 7, 0.8);
+            color: #000;
+        }
+
+        .qr-btn {
+            background: rgba(23, 162, 184, 0.8);
+            color: #fff;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ИСПРАВЛЕННЫЙ СПИСОК ИЗБРАННОГО */
+        .links-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .link-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link-item:hover {
+            transform: translateY(-5px);
+            border-color: rgba(138, 43, 226, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        /* КОРОТКАЯ ССЫЛКА С ОТСТУПОМ */
+        .link-code {
+            font-family: 'SF Mono', monospace;
+            font-weight: 800;
+            color: #8a2be2;
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* ОРИГИНАЛЬНЫЙ URL */
+        .link-url {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            word-break: break-all;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 12px;
+            border-left: 3px solid rgba(138, 43, 226, 0.5);
+        }
+
+        /* ПЕРВЫЙ РЯД КНОПОК */
+        .link-actions-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        /* ВТОРОЙ РЯД КНОПОК */
+        .link-actions-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .icon-btn {
+            height: 50px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            gap: 8px;
+            padding: 0 15px;
+        }
+
+        .icon-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .icon-btn.qr-active {
+            background: rgba(23, 162, 184, 0.3);
+            border-color: #17a2b8;
+            color: #17a2b8;
+        }
+
+        .icon-btn.delete {
+            background: rgba(220, 53, 69, 0.1);
+            border-color: rgba(220, 53, 69, 0.3);
+            color: #dc3545;
+        }
+
+        .icon-btn.delete:hover {
+            background: rgba(220, 53, 69, 0.2);
+            border-color: #dc3545;
+        }
+
+        /* QR ПРЕВЬЮ */
+        .qr-preview {
+            margin-top: 20px;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            animation: slideDown 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+                height: 0;
+                padding: 0;
+                margin: 0;
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                height: auto;
+            }
+        }
+
+        .qr-preview.hidden {
+            animation: slideUpQr 0.3s ease forwards;
+        }
+
+        @keyframes slideUpQr {
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+                height: 0;
+                padding: 0;
+                margin: 0;
+                border: none;
+            }
+        }
+
+        .qr-preview img {
+            max-width: 180px;
+            height: auto;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* СООБЩЕНИЯ */
+        .alert {
+            padding: 20px 25px;
+            border-radius: 18px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid transparent;
+            backdrop-filter: blur(10px);
+        }
+
+        .alert-success {
+            background: rgba(40, 167, 69, 0.15);
+            border-color: rgba(40, 167, 69, 0.3);
+            color: #28a745;
+        }
+
+        .alert-error {
+            background: rgba(220, 53, 69, 0.15);
+            border-color: rgba(220, 53, 69, 0.3);
+            color: #dc3545;
+        }
+
+        .alert-info {
+            background: rgba(23, 162, 184, 0.15);
+            border-color: rgba(23, 162, 184, 0.3);
+            color: #17a2b8;
+        }
+
+        /* ПУСТЫЕ СОСТОЯНИЯ */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 80px 40px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 30px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            max-width: 400px;
+            margin: 0 auto 30px;
+        }
+
+        /* СКРОЛЛБАР */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* МОБИЛЬНАЯ АДАПТАЦИЯ */
+        @media (max-width: 1200px) {
+            .links-list {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .links-list {
+                grid-template-columns: 1fr;
+            }
+
+            .input-with-btn {
+                grid-template-columns: 1fr;
+            }
+
+            .qr-btn-inline {
+                height: 60px;
+            }
+
+            .link-actions-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="logo">
-                <i class="fas fa-link"></i>
+    <div class="app-container">
+        <!-- ЛЕВАЯ ПАНЕЛЬ - ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ -->
+        <div class="sidebar" id="sidebar">
+            <div class="profile-section">
+                <div class="profile-avatar" id="userAvatar">G</div>
+                <div class="profile-name" id="userName">Гость</div>
+                <div class="profile-email" id="userEmail">Войдите в систему</div>
+                <div class="user-id" id="userId"></div>
             </div>
-            <h1>ShortLink Pro</h1>
-            <p>Сокращайте ссылки и сохраняйте избранное</p>
+
+            <button class="btn btn-secondary" onclick="logout()" id="logoutBtn" style="margin-top: auto; display: none;">
+                <i class="fas fa-sign-out-alt"></i> Выйти из системы
+            </button>
         </div>
 
-        <!-- Панель пользователя (показывается после входа) -->
-        <div id="userPanel" class="user-panel">
-            <div class="user-info">
-                <div class="user-avatar" id="userAvatar">U</div>
-                <div>
-                    <div id="userEmail">Гость</div>
-                    <small id="userId"></small>
+        <!-- ПРАВАЯ ЧАСТЬ - ОСНОВНОЙ КОНТЕНТ -->
+        <div class="main-content">
+            <div class="content-container">
+                <!-- ЗАГОЛОВОК -->
+                <div class="header">
+                    <div class="logo">
+                        <div class="logo-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div class="logo-text">
+                            <h1>ShortLink Pro</h1>
+                            <p class="subtitle">Профессиональный сервис сокращения ссылок</p>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <button class="btn btn-danger" onclick="logout()" style="padding: 8px 16px; width: auto;">
-                <i class="fas fa-sign-out-alt"></i> Выйти
-            </button>
-        </div>
 
-        <div class="tabs">
-            <button class="tab-btn active" onclick="showTab('create')" id="createTabBtn">
-                <i class="fas fa-plus"></i> Создать
-            </button>
-            <button class="tab-btn" onclick="showTab('auth')" id="authTabBtn">
-                <i class="fas fa-user"></i> Аккаунт
-            </button>
-            <button class="tab-btn" onclick="showTab('favorites')" id="favoritesTabBtn" disabled>
-                <i class="fas fa-star"></i> Избранное
-            </button>
-        </div>
+                <!-- НАВИГАЦИЯ -->
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="showTab('create')" id="createTabBtn">
+                        <i class="fas fa-plus-circle"></i> Создать ссылку
+                    </button>
+                    <button class="tab-btn" id="authTabBtn" onclick="showTab('auth')">
+                        <i class="fas fa-user"></i> Аккаунт
+                    </button>
+                    <button class="tab-btn" onclick="showTab('favorites')" id="favoritesTabBtn" disabled>
+                        <i class="fas fa-star"></i> Избранное
+                    </button>
+                    <button class="tab-btn" onclick="showTab('qr')" id="qrTabBtn">
+                        <i class="fas fa-qrcode"></i> QR Генератор
+                    </button>
+                </div>
 
-        <!-- ВКЛАДКА СОЗДАНИЯ ССЫЛКИ (доступна всем) -->
-        <div id="createTab" class="tab-content active">
-            <div id="createAlert"></div>
+                <!-- ВКЛАДКА СОЗДАНИЯ ССЫЛКИ -->
+                <div id="createTab" class="tab-content active">
+                    <div id="createAlert"></div>
 
-            <div class="form-group">
-                <label><i class="fas fa-globe"></i> Длинный URL</label>
-                <input type="text" id="longUrl" placeholder="https://example.com/очень-длинный-путь" value="https://youtube.com">
-            </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-link"></i>
+                            <div class="card-title">Создание короткой ссылки</div>
+                        </div>
 
-            <button class="btn" onclick="createShort()" id="createBtn">
-                <i class="fas fa-magic"></i> Создать короткую ссылку
-            </button>
+                        <div class="form-group">
+                            <label>Введите длинный URL</label>
+                            <input type="text" id="longUrl" placeholder="https://example.com/очень-длинный-путь" value="https://youtube.com">
+                        </div>
 
-            <div id="createResult"></div>
+                        <div class="btn-grid">
+                            <button class="btn" onclick="createShortUrl()" id="createBtn">
+                                <i class="fas fa-magic"></i> Создать короткую ссылку
+                            </button>
+                            <button class="btn btn-secondary" onclick="toggleFavoriteOption()" id="favOptionBtn">
+                                <i class="fas fa-star"></i> С избранным
+                            </button>
+                        </div>
+                    </div>
 
-            <div class="form-group" style="margin-top: 30px;">
-                <label><i class="fas fa-link"></i> Короткий код (6 символов)</label>
-                <input type="text" id="favShortUrl" placeholder="abc123" maxlength="6">
-                <button class="btn btn-success" onclick="addToFavorites()" style="margin-top: 10px;">
-                    <i class="fas fa-star"></i> Добавить в избранное
-                </button>
-                <small style="display: block; margin-top: 8px; color: #666;">
-                    <i class="fas fa-info-circle"></i> Для добавления в избранное требуется войти в аккаунт
-                </small>
-            </div>
-        </div>
+                    <!-- РЕЗУЛЬТАТ СОЗДАНИЯ -->
+                    <div id="createResult"></div>
+                </div>
 
-        <!-- ВКЛАДКА АККАУНТА -->
-        <div id="authTab" class="tab-content">
-            <div id="authAlert"></div>
+                <!-- ВКЛАДКА АВТОРИЗАЦИИ -->
+                <div id="authTab" class="tab-content">
+                    <div id="authAlert"></div>
 
-            <div class="form-group">
-                <label><i class="fas fa-envelope"></i> Email</label>
-                <input type="email" id="authEmail" placeholder="test@example.com" value="test@example.com">
-            </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-user-circle"></i>
+                            <div class="card-title">Авторизация</div>
+                        </div>
 
-            <div class="form-group">
-                <label><i class="fas fa-lock"></i> Пароль</label>
-                <input type="password" id="authPassword" placeholder="password" value="password">
-            </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="authEmail" placeholder="your@email.com" value="test@example.com">
+                        </div>
 
-            <button class="btn" onclick="login()" id="loginBtn">
-                <i class="fas fa-sign-in-alt"></i> Войти
-            </button>
+                        <div class="form-group">
+                            <label>Пароль</label>
+                            <input type="password" id="authPassword" placeholder="••••••••" value="password">
+                        </div>
 
-            <button class="btn btn-secondary" onclick="register()">
-                <i class="fas fa-user-plus"></i> Зарегистрироваться
-            </button>
-        </div>
+                        <div class="btn-grid">
+                            <button class="btn" onclick="login()" id="loginBtn">
+                                <i class="fas fa-sign-in-alt"></i> Войти
+                            </button>
+                            <button class="btn btn-secondary" onclick="register()" id="registerBtn">
+                                <i class="fas fa-user-plus"></i> Регистрация
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- ВКЛАДКА ИЗБРАННОГО (только для авторизованных) -->
-        <div id="favoritesTab" class="tab-content">
-            <div id="favoritesAlert"></div>
+                <!-- ВКЛАДКА ИЗБРАННОГО -->
+                <div id="favoritesTab" class="tab-content">
+                    <div id="favoritesAlert"></div>
 
-            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <button class="btn" onclick="loadFavorites()" id="loadFavBtn">
-                    <i class="fas fa-sync-alt"></i> Обновить
-                </button>
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-star"></i>
+                            <div class="card-title">Мои избранные ссылки</div>
+                        </div>
 
-                <button class="btn btn-success" onclick="showTab('create')">
-                    <i class="fas fa-plus"></i> Добавить новую
-                </button>
-            </div>
+                        <div class="btn-grid">
+                            <button class="btn" onclick="loadFavorites()" id="loadFavBtn">
+                                <i class="fas fa-sync-alt"></i> Обновить список
+                            </button>
+                            <button class="btn btn-secondary" onclick="showTab('create')">
+                                <i class="fas fa-plus"></i> Создать новую
+                            </button>
+                        </div>
 
-            <div id="favoritesList" class="links-list">
-                <!-- Здесь будут избранные ссылки -->
+                        <div id="favoritesList" class="links-list">
+                            <div class="empty-state">
+                                <i class="fas fa-star"></i>
+                                <h3>Список избранного пуст</h3>
+                                <p>Добавляйте ссылки в избранное, и они появятся здесь</p>
+                                <button class="btn" onclick="showTab('create')" style="width: auto; margin-top: 20px;">
+                                    <i class="fas fa-plus"></i> Создать первую ссылку
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ВКЛАДКА QR ГЕНЕРАТОРА -->
+                <div id="qrTab" class="tab-content">
+                    <div id="qrAlert"></div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-qrcode"></i>
+                            <div class="card-title">Генератор QR кодов</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Введите 6-значный код ссылки</label>
+                            <div class="input-with-btn">
+                                <input type="text" id="shortCodeForQR" placeholder="XXXXXX" maxlength="6">
+                                <button class="qr-btn-inline" onclick="generateQRForShortUrl()" id="qrBtn">
+                                    <i class="fas fa-qrcode"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="qrResult"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        const BASE = 'http://localhost:3032';
+        const BASE = 'http://localhost:2035';
         let currentUser = null;
+        let currentQRBlob = null;
+        let activeQRPreview = null;
+        let autoAddToFav = false;
 
         // Инициализация
         window.onload = function() {
-            console.log('ShortLink Pro загружен');
             showTab('create');
-
-            // Проверяем авторизацию при загрузке
             checkAuth();
         };
 
-        // Проверка авторизации
-        async function checkAuth() {
-            try {
-                // Пробуем получить избранное - если получится, значит авторизован
-                const response = await fetch(BASE + '/user/get_my_favlinks', {
-                    credentials: 'include'
-                });
+        // ==================== ОСНОВНЫЕ ФУНКЦИИ ====================
 
-                if (response.ok) {
-                    // Мы авторизованы
-                    const email = localStorage.getItem('userEmail') || 'Пользователь';
-                    currentUser = {
-                        id: '1',
-                        email: email
-                    };
-                    updateUI();
-                }
-            } catch (error) {
-                console.log('Не авторизован');
-            }
-        }
-
-        // Показ вкладок
         function showTab(tabName) {
-            // Скрываем все
+            // Если пользователь авторизован и пытается открыть вкладку авторизации - запрещаем
+            if (currentUser && tabName === 'auth') {
+                showAlert('createAlert', '✅ Вы уже авторизованы в системе', 'info');
+                return;
+            }
+
+            // Скрыть все вкладки
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
-            // Показываем нужную
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            document.getElementById(tabName + 'TabBtn').classList.add('active');
+            // Показать выбранную
+            const tabElement = document.getElementById(tabName + 'Tab');
+            const tabBtnElement = document.getElementById(tabName + 'TabBtn');
 
-            // Очищаем сообщения при переключении
+            if (tabElement) {
+                tabElement.classList.add('active');
+            }
+
+            if (tabBtnElement) {
+                tabBtnElement.classList.add('active');
+            }
+
+            // Очистить сообщения
             clearAlerts();
 
-            // Если открыли вкладку избранного и авторизованы - загружаем
+            // Загрузить данные для вкладки
             if (tabName === 'favorites' && currentUser) {
                 loadFavorites();
             }
-
-            // Если открыли избранное без авторизации - показываем сообщение
-            if (tabName === 'favorites' && !currentUser) {
-                document.getElementById('favoritesList').innerHTML = `
-                    <div style="text-align: center; padding: 40px; color: #666;">
-                        <i class="fas fa-lock fa-3x" style="margin-bottom: 20px;"></i>
-                        <h3>Требуется авторизация</h3>
-                        <p>Войдите в аккаунт чтобы увидеть свои избранные ссылки</p>
-                        <button class="btn" onclick="showTab('auth')" style="margin-top: 20px;">
-                            <i class="fas fa-sign-in-alt"></i> Войти в аккаунт
-                        </button>
-                    </div>
-                `;
-            }
         }
 
-        // Очистка сообщений
         function clearAlerts() {
-            document.getElementById('authAlert').innerHTML = '';
-            document.getElementById('createAlert').innerHTML = '';
-            document.getElementById('favoritesAlert').innerHTML = '';
+            ['authAlert', 'createAlert', 'favoritesAlert', 'qrAlert'].forEach(id => {
+                document.getElementById(id).innerHTML = '';
+            });
         }
 
-        // Показать сообщение
         function showAlert(elementId, message, type = 'info') {
             const element = document.getElementById(elementId);
+            const icon = type === 'success' ? 'check-circle' :
+                         type === 'error' ? 'exclamation-circle' : 'info-circle';
+
             element.innerHTML = `
                 <div class="alert alert-${type}">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <i class="fas fa-${icon}"></i>
                     ${message}
                 </div>
             `;
         }
 
-        // Обновление интерфейса при входе/выходе
-        function updateUI() {
-            const userPanel = document.getElementById('userPanel');
-            const favoritesTabBtn = document.getElementById('favoritesTabBtn');
+        function setLoading(buttonId, isLoading, text = '') {
+            const btn = document.getElementById(buttonId);
+            if (!btn) return;
 
-            if (currentUser) {
-                // ПОЛЬЗОВАТЕЛЬ ВОШЕЛ
-                userPanel.classList.add('show');
-                document.getElementById('userEmail').textContent = currentUser.email;
-                document.getElementById('userAvatar').textContent = currentUser.email.charAt(0).toUpperCase();
-
-                // Включаем вкладку избранного
-                favoritesTabBtn.disabled = false;
-
-                // Показываем сообщение о успешном входе
-                showAlert('createAlert', `✅ Вы вошли как ${currentUser.email}`, 'success');
-
+            if (isLoading) {
+                btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${text}`;
+                btn.disabled = true;
             } else {
-                // ПОЛЬЗОВАТЕЛЬ НЕ ВОШЕЛ
-                userPanel.classList.remove('show');
-
-                // Отключаем вкладку избранного
-                favoritesTabBtn.disabled = true;
-
-                // Если открыта вкладка избранного - переключаем на создание
-                if (document.getElementById('favoritesTab').classList.contains('active')) {
-                    showTab('create');
-                }
+                btn.innerHTML = text;
+                btn.disabled = false;
             }
         }
 
-        // Регистрация
+        function copyText(text, alertId) {
+            navigator.clipboard.writeText(text).then(() => {
+                showAlert(alertId, `✅ Скопировано!`, 'success');
+            }).catch(err => {
+                showAlert(alertId, '❌ Ошибка копирования', 'error');
+            });
+        }
+
+        function toggleFavoriteOption() {
+            autoAddToFav = !autoAddToFav;
+            const btn = document.getElementById('favOptionBtn');
+            if (autoAddToFav) {
+                btn.innerHTML = `<i class="fas fa-star"></i> Без избранного`;
+                btn.style.background = 'rgba(255, 193, 7, 0.2)';
+                showAlert('createAlert', '✅ Автоматическое добавление в избранное включено', 'success');
+            } else {
+                btn.innerHTML = `<i class="fas fa-star"></i> С избранным`;
+                btn.style.background = '';
+                showAlert('createAlert', '❌ Автоматическое добавление в избранное выключено', 'info');
+            }
+        }
+
+        // ==================== АВТОРИЗАЦИЯ ====================
+
+        async function checkAuth() {
+            try {
+                const response = await fetch(BASE + '/user/get_my_favlinks', {
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const email = localStorage.getItem('userEmail') || 'Пользователь';
+                    currentUser = { email, id: 'user-' + Date.now() };
+                    updateUI();
+                    return true;
+                }
+            } catch (error) {
+                console.log('Не авторизован');
+            }
+            return false;
+        }
+
+        function updateUI() {
+            const sidebar = document.getElementById('sidebar');
+            const authTabBtn = document.getElementById('authTabBtn');
+            const favoritesTabBtn = document.getElementById('favoritesTabBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.email.split('@')[0];
+                document.getElementById('userEmail').textContent = currentUser.email;
+                document.getElementById('userAvatar').textContent = currentUser.email.charAt(0).toUpperCase();
+                document.getElementById('userId').textContent = `ID: ${currentUser.id}`;
+
+                // Скрываем вкладку аккаунта для авторизованного пользователя
+                if (authTabBtn) {
+                    authTabBtn.classList.add('hidden');
+                }
+
+                favoritesTabBtn.disabled = false;
+                logoutBtn.style.display = 'flex';
+
+                // Если сейчас открыта вкладка авторизации - переключаем на создание
+                if (document.getElementById('authTab').classList.contains('active')) {
+                    showTab('create');
+                }
+
+            } else {
+                document.getElementById('userName').textContent = 'Гость';
+                document.getElementById('userEmail').textContent = 'Войдите в систему';
+                document.getElementById('userAvatar').textContent = 'G';
+                document.getElementById('userId').textContent = '';
+
+                // Показываем вкладку аккаунта для гостя
+                if (authTabBtn) {
+                    authTabBtn.classList.remove('hidden');
+                }
+
+                favoritesTabBtn.disabled = true;
+                logoutBtn.style.display = 'none';
+            }
+        }
+
         async function register() {
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
@@ -552,14 +1087,10 @@
                 return;
             }
 
-            const loginBtn = document.getElementById('loginBtn');
-            const originalText = loginBtn.innerHTML;
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Регистрация...';
-            loginBtn.disabled = true;
+            setLoading('loginBtn', true, 'Регистрация...');
+            setLoading('registerBtn', true, 'Регистрация...');
 
             try {
-                showAlert('authAlert', '<i class="fas fa-spinner fa-spin"></i> Регистрируем...', 'info');
-
                 const response = await fetch(BASE + '/auth/register', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -568,9 +1099,12 @@
 
                 if (response.ok) {
                     showAlert('authAlert', '✅ Регистрация успешна! Теперь войдите', 'success');
-
-                    // Сохраняем email
                     localStorage.setItem('userEmail', email);
+
+                    // После регистрации предлагаем войти
+                    setTimeout(() => {
+                        login();
+                    }, 1500);
 
                 } else {
                     const data = await response.json();
@@ -579,12 +1113,11 @@
             } catch (error) {
                 showAlert('authAlert', `❌ Ошибка сети: ${error.message}`, 'error');
             } finally {
-                loginBtn.innerHTML = originalText;
-                loginBtn.disabled = false;
+                setLoading('loginBtn', false, 'Войти');
+                setLoading('registerBtn', false, 'Регистрация');
             }
         }
 
-        // Вход
         async function login() {
             const email = document.getElementById('authEmail').value;
             const password = document.getElementById('authPassword').value;
@@ -594,13 +1127,10 @@
                 return;
             }
 
-            const loginBtn = document.getElementById('loginBtn');
-            const originalText = loginBtn.innerHTML;
-            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Вход...';
-            loginBtn.disabled = true;
+            setLoading('loginBtn', true, 'Вход...');
+            setLoading('registerBtn', true, 'Вход...');
 
             try {
-                // Отправляем запрос на вход
                 const formData = new URLSearchParams();
                 formData.append('username', email);
                 formData.append('password', password);
@@ -612,36 +1142,32 @@
                     body: formData.toString()
                 });
 
-                console.log('Статус входа:', response.status);
-
                 if (response.status === 204 || response.ok) {
-                    // ВХОД УСПЕШЕН
                     currentUser = {
-                        id: '1',
-                        email: email
+                        email,
+                        id: 'user-' + Date.now()
                     };
-
                     localStorage.setItem('userEmail', email);
 
                     showAlert('authAlert', '✅ Вход успешен!', 'success');
                     updateUI();
 
-                    // Переключаем на создание ссылок
-                    setTimeout(() => showTab('create'), 1000);
+                    setTimeout(() => {
+                        showTab('create');
+                        showAlert('createAlert', '✅ Вы успешно вошли в систему!', 'success');
+                    }, 1000);
 
                 } else {
-                    const text = await response.text();
-                    showAlert('authAlert', `❌ Ошибка входа: ${response.status} - ${text}`, 'error');
+                    showAlert('authAlert', '❌ Ошибка входа: проверьте данные', 'error');
                 }
             } catch (error) {
                 showAlert('authAlert', `❌ Ошибка сети: ${error.message}`, 'error');
             } finally {
-                loginBtn.innerHTML = originalText;
-                loginBtn.disabled = false;
+                setLoading('loginBtn', false, 'Войти');
+                setLoading('registerBtn', false, 'Регистрация');
             }
         }
 
-        // Выход
         async function logout() {
             try {
                 await fetch(BASE + '/auth/jwt/logout', {
@@ -655,11 +1181,13 @@
             currentUser = null;
             localStorage.removeItem('userEmail');
             updateUI();
+            showTab('create');
             showAlert('createAlert', '✅ Вы вышли из системы', 'success');
         }
 
-        // СОЗДАНИЕ КОРОТКОЙ ССЫЛКИ (работает без авторизации!)
-        async function createShort() {
+        // ==================== СОЗДАНИЕ ССЫЛКИ ====================
+
+        async function createShortUrl() {
             const url = document.getElementById('longUrl').value.trim();
 
             if (!url) {
@@ -672,19 +1200,12 @@
                 return;
             }
 
-            const createBtn = document.getElementById('createBtn');
-            const originalText = createBtn.innerHTML;
-            createBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Создаем...';
-            createBtn.disabled = true;
+            setLoading('createBtn', true, 'Создание...');
 
             try {
-                showAlert('createAlert', '<i class="fas fa-spinner fa-spin"></i> Создаем короткую ссылку...', 'info');
-
-                // ВАЖНО: отправляем без credentials для гостевого доступа
                 const response = await fetch(BASE + '/shortener/get_short_url', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    // Не используем credentials: 'include' - чтобы работало без авторизации
                     body: JSON.stringify({ long_url: url })
                 });
 
@@ -692,26 +1213,49 @@
 
                 if (response.ok) {
                     const shortCode = data['New short url'] || data.short_url;
-                    const fullUrl = `${BASE}/shortener/${shortCode}`;
 
+                    if (!shortCode) {
+                        throw new Error('Сервер не вернул короткий код');
+                    }
+
+                    const fullShortUrl = `${BASE}/shortener/${shortCode}`;
+
+                    // Заполняем поле для QR кода
+                    document.getElementById('shortCodeForQR').value = shortCode;
+
+                    // Показываем результат
                     const resultHTML = `
                         <div class="result-box">
-                            <h4><i class="fas fa-check-circle"></i> Ссылка создана!</h4>
-                            <div class="result-content">
-                                <strong>Короткий код:</strong> ${shortCode}<br>
-                                <strong>Полная ссылка:</strong> ${fullUrl}
+                            <div class="result-header">
+                                <i class="fas fa-check-circle"></i>
+                                <span>✅ Ссылка успешно создана!</span>
                             </div>
-                            <div style="margin-top: 15px;">
-                                <button class="action-btn copy-btn" onclick="copyText('${fullUrl}', 'createAlert')">
+                            <div class="result-line">
+                                <span class="result-label">Короткий код:</span>
+                                <span class="result-value result-code">${shortCode}</span>
+                            </div>
+                            <div class="result-line">
+                                <span class="result-label">Короткая ссылка:</span>
+                                <a href="${fullShortUrl}" target="_blank" class="result-value result-url">${fullShortUrl}</a>
+                            </div>
+                            <div class="result-line">
+                                <span class="result-label">Оригинальный URL:</span>
+                                <span class="result-value">${url}</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="action-btn copy-btn" onclick="copyText('${fullShortUrl}', 'createAlert')">
                                     <i class="far fa-copy"></i> Копировать
                                 </button>
-                                <a href="${fullUrl}" target="_blank" style="text-decoration: none;">
+                                <a href="${fullShortUrl}" target="_blank" style="text-decoration: none;">
                                     <button class="action-btn open-btn">
                                         <i class="fas fa-external-link-alt"></i> Перейти
                                     </button>
                                 </a>
+                                <button class="action-btn qr-btn" onclick="showTab('qr')">
+                                    <i class="fas fa-qrcode"></i> QR код
+                                </button>
                                 ${currentUser ? `
-                                <button class="action-btn fav-btn" onclick="addFavoriteFromResult('${shortCode}')">
+                                <button class="action-btn fav-btn" onclick="addToFavorites('${shortCode}')">
                                     <i class="fas fa-star"></i> В избранное
                                 </button>
                                 ` : ''}
@@ -722,86 +1266,151 @@
                     document.getElementById('createResult').innerHTML = resultHTML;
                     showAlert('createAlert', '✅ Ссылка успешно создана!', 'success');
 
-                    // Автозаполняем поле для добавления в избранное
-                    document.getElementById('favShortUrl').value = shortCode;
+                    // Автоматически добавляем в избранное
+                    if (autoAddToFav && currentUser) {
+                        setTimeout(() => addToFavorites(shortCode), 1000);
+                    }
 
                 } else {
                     showAlert('createAlert', `❌ Ошибка: ${data.detail || JSON.stringify(data)}`, 'error');
                 }
             } catch (error) {
-                showAlert('createAlert', `❌ Ошибка сети: ${error.message}`, 'error');
+                showAlert('createAlert', `❌ Ошибка: ${error.message}`, 'error');
             } finally {
-                createBtn.innerHTML = originalText;
-                createBtn.disabled = false;
+                setLoading('createBtn', false, 'Создать короткую ссылку');
             }
         }
 
-        // Добавить в избранное из результата
-        function addFavoriteFromResult(shortCode) {
-            document.getElementById('favShortUrl').value = shortCode;
-            addToFavorites();
+        // ==================== QR ГЕНЕРАТОР ====================
+
+        async function generateQRForShortUrl() {
+            const shortCode = document.getElementById('shortCodeForQR').value.trim();
+
+            if (!shortCode || shortCode.length !== 6) {
+                showAlert('qrAlert', 'Введите корректный 6-значный код', 'error');
+                return;
+            }
+
+            document.getElementById('qrResult').innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Генерация QR кода...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch(`${BASE}/shortener/get_qr_by_short_url/${shortCode}`);
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const objectUrl = URL.createObjectURL(blob);
+                    currentQRBlob = blob;
+
+                    const resultHTML = `
+                        <div class="qr-preview">
+                            <img src="${objectUrl}" alt="QR Code для ${shortCode}">
+                            <div class="action-buttons">
+                                <button class="action-btn" onclick="downloadQR('${shortCode}')" style="background: #28a745; color: #fff;">
+                                    <i class="fas fa-download"></i> Скачать QR
+                                </button>
+                                <button class="action-btn copy-btn" onclick="copyText('${objectUrl}', 'qrAlert')">
+                                    <i class="far fa-copy"></i> Копировать URL
+                                </button>
+                                ${currentUser ? `
+                                <button class="action-btn fav-btn" onclick="addToFavorites('${shortCode}')">
+                                    <i class="fas fa-star"></i> В избранное
+                                </button>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('qrResult').innerHTML = resultHTML;
+                    showAlert('qrAlert', '✅ QR код успешно сгенерирован!', 'success');
+
+                } else {
+                    showAlert('qrAlert', '❌ Ошибка генерации QR кода', 'error');
+                    document.getElementById('qrResult').innerHTML = '';
+                }
+            } catch (error) {
+                showAlert('qrAlert', `❌ Ошибка: ${error.message}`, 'error');
+                document.getElementById('qrResult').innerHTML = '';
+            }
         }
 
-        // Добавить в избранное (требуется авторизация!)
-        async function addToFavorites() {
+        function downloadQR(identifier) {
+            if (!currentQRBlob) {
+                showAlert('qrAlert', '❌ Нет QR кода для скачивания', 'error');
+                return;
+            }
+
+            const url = window.URL.createObjectURL(currentQRBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `qr_${identifier}_${Date.now()}.png`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+
+            showAlert('qrAlert', '✅ QR код скачан!', 'success');
+        }
+
+        // ==================== ИЗБРАННОЕ ====================
+
+        async function addToFavorites(shortCode) {
             if (!currentUser) {
-                showAlert('createAlert', '❌ Для добавления в избранное требуется войти в аккаунт', 'error');
+                showAlert('createAlert', '❌ Для добавления в избранное требуется войти', 'error');
                 showTab('auth');
                 return;
             }
 
-            const shortUrl = document.getElementById('favShortUrl').value.trim();
-
-            if (!shortUrl || shortUrl.length !== 6) {
-                showAlert('createAlert', '❌ Введите корректный код (6 символов)', 'error');
+            if (!shortCode || shortCode.length !== 6) {
+                showAlert('createAlert', 'Введите корректный 6-значный код', 'error');
                 return;
             }
 
             try {
-                showAlert('createAlert', '<i class="fas fa-spinner fa-spin"></i> Добавляем в избранное...', 'info');
+                showAlert('favoritesAlert', '🔄 Добавление в избранное...', 'info');
 
-                // Используем credentials для авторизованного запроса
-                const response = await fetch(`${BASE}/user/add_favlinks/${shortUrl}`, {
+                const response = await fetch(`${BASE}/user/add_favlinks/${shortCode}`, {
                     method: 'POST',
                     credentials: 'include'
                 });
 
-                const data = await response.json();
-
                 if (response.ok) {
-                    showAlert('createAlert', `✅ Ссылка "${shortUrl}" добавлена в избранное!`, 'success');
+                    showAlert('favoritesAlert', `✅ Ссылка "${shortCode}" добавлена в избранное!`, 'success');
 
-                    // Очищаем поле
-                    document.getElementById('favShortUrl').value = '';
-
-                    // Если открыта вкладка избранного - обновляем
                     if (document.getElementById('favoritesTab').classList.contains('active')) {
                         loadFavorites();
                     }
                 } else {
-                    showAlert('createAlert', `❌ Ошибка: ${data.detail || data.message || JSON.stringify(data)}`, 'error');
+                    const data = await response.json();
+                    showAlert('favoritesAlert', `❌ Ошибка: ${data.detail || 'Неизвестная ошибка'}`, 'error');
                 }
             } catch (error) {
-                showAlert('createAlert', `❌ Ошибка сети: ${error.message}`, 'error');
+                showAlert('favoritesAlert', `❌ Ошибка сети: ${error.message}`, 'error');
             }
         }
 
-        // Загрузить избранное (только для авторизованных)
         async function loadFavorites() {
             if (!currentUser) {
-                showAlert('favoritesAlert', '❌ Сначала войдите в систему', 'error');
-                showTab('auth');
+                document.getElementById('favoritesList').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-lock"></i>
+                        <h3>Требуется авторизация</h3>
+                        <p>Войдите в аккаунт чтобы увидеть избранное</p>
+                        <button class="btn" onclick="showTab('auth')" style="width: auto; margin-top: 20px;">
+                            <i class="fas fa-sign-in-alt"></i> Войти в систему
+                        </button>
+                    </div>
+                `;
                 return;
             }
 
-            const loadBtn = document.getElementById('loadFavBtn');
-            const originalText = loadBtn.innerHTML;
-            loadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Загрузка...';
-            loadBtn.disabled = true;
+            setLoading('loadFavBtn', true, 'Загрузка...');
 
             try {
-                showAlert('favoritesAlert', '<i class="fas fa-spinner fa-spin"></i> Загружаем избранное...', 'info');
-
                 const response = await fetch(BASE + '/user/get_my_favlinks', {
                     credentials: 'include'
                 });
@@ -812,104 +1421,211 @@
                 if (response.ok) {
                     const favorites = data['favorite links'] || data.favorites || data;
 
-                    if (favorites.length > 0) {
-                        showAlert('favoritesAlert', `✅ Найдено ${favorites.length} избранных ссылок`, 'success');
-
+                    if (favorites && favorites.length > 0) {
                         favList.innerHTML = '';
 
                         favorites.forEach(fav => {
-                            const shortUrl = fav.short_url || fav.link?.short_url || fav;
-                            const originalUrl = fav.original_url || fav.link?.original_url || `Ссылка: ${shortUrl}`;
+                            const shortUrl = fav.short_url || fav;
+                            const originalUrl = fav.original_url || `Ссылка: ${shortUrl}`;
+                            const fullUrl = `${BASE}/shortener/${shortUrl}`;
 
                             const item = document.createElement('div');
                             item.className = 'link-item';
+                            item.id = `fav-${shortUrl}`;
                             item.innerHTML = `
-                                <div style="flex: 1;">
-                                    <div class="link-code">${shortUrl}</div>
-                                    <div class="link-url">${originalUrl}</div>
-                                </div>
-                                <div class="link-actions">
-                                    <button class="action-btn copy-btn" onclick="copyText('${BASE}/shortener/${shortUrl}', 'favoritesAlert')">
-                                        <i class="far fa-copy"></i>
+                                <div class="link-code">${shortUrl}</div>
+                                <div class="link-url">${originalUrl}</div>
+
+                                <!-- ПЕРВЫЙ РЯД КНОПОК -->
+                                <div class="link-actions-row">
+                                    <button class="icon-btn" onclick="copyText('${fullUrl}', 'favoritesAlert')">
+                                        <i class="far fa-copy"></i> Копировать
                                     </button>
-                                    <a href="${BASE}/shortener/${shortUrl}" target="_blank">
-                                        <button class="action-btn open-btn">
-                                            <i class="fas fa-external-link-alt"></i>
+                                    <a href="${fullUrl}" target="_blank" style="text-decoration: none;">
+                                        <button class="icon-btn">
+                                            <i class="fas fa-external-link-alt"></i> Перейти
                                         </button>
                                     </a>
-                                    <button class="action-btn remove-btn" onclick="removeFromFavorites('${shortUrl}')">
-                                        <i class="fas fa-trash"></i>
+                                </div>
+
+                                <!-- ВТОРОЙ РЯД КНОПОК -->
+                                <div class="link-actions-row">
+                                    <button class="icon-btn qr-btn" onclick="toggleQRPreview('${shortUrl}', this)" id="qr-btn-${shortUrl}">
+                                        <i class="fas fa-qrcode"></i> QR код
+                                    </button>
+                                    <button class="icon-btn delete" onclick="removeFromFavorites('${shortUrl}')">
+                                        <i class="fas fa-trash"></i> Удалить
                                     </button>
                                 </div>
+
+                                <!-- QR ПРЕВЬЮ -->
+                                <div id="qr-preview-${shortUrl}"></div>
                             `;
+
                             favList.appendChild(item);
                         });
+
+                        showAlert('favoritesAlert', `✅ Загружено ${favorites.length} избранных ссылок`, 'success');
                     } else {
+                        favList.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-star"></i>
+                                <h3>Нет избранных ссылок</h3>
+                                <p>Добавьте ссылки в избранное, и они появятся здесь</p>
+                                <button class="btn" onclick="showTab('create')" style="width: auto; margin-top: 20px;">
+                                    <i class="fas fa-plus"></i> Создать первую ссылку
+                                </button>
+                            </div>
+                        `;
                         showAlert('favoritesAlert', '📭 У вас пока нет избранных ссылок', 'info');
-                        favList.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;">Нет избранных ссылок</div>';
                     }
                 } else {
-                    showAlert('favoritesAlert', `❌ Ошибка: ${data.detail || JSON.stringify(data)}`, 'error');
+                    showAlert('favoritesAlert', '❌ Ошибка загрузки избранного', 'error');
                 }
             } catch (error) {
                 showAlert('favoritesAlert', `❌ Ошибка сети: ${error.message}`, 'error');
             } finally {
-                loadBtn.innerHTML = originalText;
-                loadBtn.disabled = false;
+                setLoading('loadFavBtn', false, 'Обновить список');
             }
         }
 
-        // Удалить из избранного
-        async function removeFromFavorites(shortUrl) {
-            if (!confirm(`Удалить ссылку ${shortUrl} из избранного?`)) {
+        async function toggleQRPreview(shortUrl, button) {
+            const previewId = `qr-preview-${shortUrl}`;
+            const previewElement = document.getElementById(previewId);
+
+            // Если QR уже открыт, закрываем его
+            if (previewElement.innerHTML.trim() !== '') {
+                previewElement.classList.add('hidden');
+                setTimeout(() => {
+                    previewElement.innerHTML = '';
+                    previewElement.classList.remove('hidden');
+                }, 300);
+                button.classList.remove('qr-active');
+                activeQRPreview = null;
                 return;
             }
 
+            // Закрываем предыдущий QR
+            if (activeQRPreview && activeQRPreview !== previewId) {
+                const prevElement = document.getElementById(activeQRPreview);
+                if (prevElement) {
+                    prevElement.classList.add('hidden');
+                    setTimeout(() => {
+                        prevElement.innerHTML = '';
+                        prevElement.classList.remove('hidden');
+                    }, 300);
+                    const prevBtn = document.getElementById(`qr-btn-${activeQRPreview.split('-')[2]}`);
+                    if (prevBtn) prevBtn.classList.remove('qr-active');
+                }
+            }
+
+            // Показываем загрузку
+            previewElement.innerHTML = `
+                <div style="padding: 20px; text-align: center; color: rgba(255, 255, 255, 0.5);">
+                    <i class="fas fa-spinner fa-spin" style="font-size: 20px; margin-bottom: 10px;"></i>
+                    <p>Загрузка QR кода...</p>
+                </div>
+            `;
+
+            button.classList.add('qr-active');
+            activeQRPreview = previewId;
+
             try {
-                const response = await fetch(`${BASE}/user/delete_favlink/${shortUrl}`, {
+                const response = await fetch(`${BASE}/shortener/get_qr_by_short_url/${shortUrl}`);
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const objectUrl = URL.createObjectURL(blob);
+
+                    previewElement.innerHTML = `
+                        <div class="qr-preview">
+                            <img src="${objectUrl}" alt="QR Code для ${shortUrl}">
+                            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 15px;">
+                                <button class="icon-btn" onclick="downloadSingleQR('${shortUrl}', '${objectUrl}')" style="background: rgba(40, 167, 69, 0.2);" title="Скачать QR">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                                <button class="icon-btn" onclick="copyText('${objectUrl}', 'favoritesAlert')" title="Копировать URL QR">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    previewElement.innerHTML = `
+                        <div class="alert alert-error" style="margin: 10px 0;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            Ошибка загрузки QR кода
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                previewElement.innerHTML = `
+                    <div class="alert alert-error" style="margin: 10px 0;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Ошибка сети: ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function downloadSingleQR(shortUrl, objectUrl) {
+            const a = document.createElement('a');
+            a.href = objectUrl;
+            a.download = `qr_${shortUrl}_${Date.now()}.png`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(objectUrl);
+            document.body.removeChild(a);
+
+            showAlert('favoritesAlert', `✅ QR код для ${shortUrl} скачан!`, 'success');
+        }
+
+        async function removeFromFavorites(shortUrl) {
+            if (!confirm(`Вы уверены, что хотите удалить ссылку "${shortUrl}" из избранного?`)) return;
+
+            try {
+                // ПЕРВЫЙ ВАРИАНТ: /user/delete_favlink/{short_url}
+                let response = await fetch(`${BASE}/user/delete_favlink/${shortUrl}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
 
+                // ВТОРОЙ ВАРИАНТ: /user/remove_favlinks/{short_url} (на всякий случай)
+                if (!response.ok) {
+                    response = await fetch(`${BASE}/user/remove_favlinks/${shortUrl}`, {
+                        method: 'DELETE',
+                        credentials: 'include'
+                    });
+                }
+
                 if (response.ok) {
                     showAlert('favoritesAlert', `✅ Ссылка "${shortUrl}" удалена из избранного`, 'success');
-                    setTimeout(() => loadFavorites(), 500);
+
+                    // Анимация удаления элемента
+                    const item = document.getElementById(`fav-${shortUrl}`);
+                    if (item) {
+                        item.style.transform = 'scale(0.9)';
+                        item.style.opacity = '0';
+                        setTimeout(() => {
+                            loadFavorites();
+                        }, 300);
+                    } else {
+                        loadFavorites();
+                    }
                 } else {
                     const data = await response.json();
-                    showAlert('favoritesAlert', `❌ Ошибка удаления: ${data.detail || JSON.stringify(data)}`, 'error');
+                    showAlert('favoritesAlert', `❌ Ошибка удаления: ${data.detail || 'Неизвестная ошибка'}`, 'error');
                 }
             } catch (error) {
                 showAlert('favoritesAlert', `❌ Ошибка сети: ${error.message}`, 'error');
             }
         }
 
-        // Копирование текста
-        function copyText(text, alertId = 'createAlert') {
-            navigator.clipboard.writeText(text)
-                .then(() => {
-                    showAlert(alertId, '✅ Ссылка скопирована в буфер!', 'success');
-                })
-                .catch(() => {
-                    showAlert(alertId, '❌ Не удалось скопировать', 'error');
-                });
+        // ==================== УТИЛИТЫ ====================
+
+        function openLink(url) {
+            window.open(url, '_blank');
         }
-
-        // Обработка Enter
-        document.getElementById('longUrl').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') createShort();
-        });
-
-        document.getElementById('favShortUrl').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addToFavorites();
-        });
-
-        document.getElementById('authEmail').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') login();
-        });
-
-        document.getElementById('authPassword').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') login();
-        });
     </script>
 </body>
 </html>
