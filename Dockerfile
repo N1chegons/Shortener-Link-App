@@ -1,11 +1,32 @@
-FROM python:3.9
+FROM python:3.11
 
-WORKDIR /code
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
 
-COPY ./requirements.txt /code/requirements.txt
+WORKDIR /app
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+RUN pip install --upgrade pip wheel "poetry==1.8.3"
 
-COPY ./src /code/src
+RUN poetry config virtualenvs.create false
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "80"]
+COPY poetry.lock pyproject.toml ./
+
+RUN poetry install
+
+COPY src ./src
+
+COPY migrations ./migrations
+
+COPY alembic.ini .
+
+CMD ["sh", "-c", "\
+  echo '🚀 Starting FastAPI application' && \
+  echo '⏳ Waiting for database...' && \
+  sleep 5 && \
+  echo '📦 Running migrations...' && \
+  alembic revision --autogenerate && \
+  alembic upgrade head && \
+  echo '✅ Starting server...' && \
+  echo '📄 Docs: http://localhost:5050/docs' && \
+  uvicorn src.main:app --host 0.0.0.0 --port 8000"]
+
