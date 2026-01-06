@@ -20,9 +20,6 @@ COPY migrations ./migrations
 COPY alembic.ini .
 
 CMD ["sh", "-c", "\
-  echo '🚀 Starting FastAPI application' && \
-  echo '⏳ Waiting for database...' && \
-  sleep 5 && \
   echo '📦 Running migrations...' && \
   alembic revision --autogenerate && \
   alembic upgrade head && \

@@ -16,7 +16,7 @@ from src.logger import get_logger, setup_logging
 setup_logging()
 logger = get_logger(__name__)
 ALPHABET: str = string.ascii_letters + string.digits
-redis_client = redis.Redis(host='localhost', port=6379, db=0)
+redis_client = redis.Redis(host='redis', port=6379, db=0)
 
 
 def generate_random_short_url() -> str:

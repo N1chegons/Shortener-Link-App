@@ -18,6 +18,10 @@ class Settings(BaseSettings):
 
     TEST_DATABASE_URL: str
 
+    REDIS_HOST:str
+    REDIS_PORT:int
+    REDIS_URL:str
+
 
     @property
     def DB_URL(self):
